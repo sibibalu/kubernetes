@@ -16,3 +16,7 @@ kubectl get pods my-pod -o yaml
 kubectl get pods  -o wide
 kubectl delete pods my-pod
 
+#For live edit
+kubectl edit pods myapp-pod         #add a label
+kubectl describe pods myapp-pod     #check
+

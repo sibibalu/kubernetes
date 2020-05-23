@@ -1,0 +1,13 @@
+kubectl get pods
+kubectl create -f rc-definition.yml
+kubectl get pods
+kubectl get pods -o wide
+kubectl get replicationcontrollers
+kubectl get rc
+kubectl get rc -o wide
+kubectl describe rc myapp-rc
+kubectl get pods
+kubectl delete pods myapp-rc-ctqjc
+kubectl get pods
+kubectl delete rc myapp-rc
+
