@@ -1,0 +1,13 @@
+vim deployment.yml
+kubectl get  pods
+kubectl get deployments
+kubectl create -f deployment.yml
+kubectl get deployments
+kubectl get  pods
+kubectl get deployments
+kubectl describe deployments.apps myapp-rc
+kubectl get rs
+kubectl get all
+kubectl delete deployments.apps myapp-rc
+kubectl get all
+
