@@ -1,0 +1,14 @@
+kubectl create -f clusterip-service.yml
+kubectl create -f clusterip-pod.yml
+kubectl get svc
+kubectl get pods
+kubectl get svc back-end -o wide
+kubectl get  pods myapp-pod -o wide
+kubectl describe pods myapp-pod
+kubectl describe svc back-end
+kubectl get service back-end --watch
+
+
+kubectl exec -it myapp-pod -- bash       #in to the pod, install curl (apt update then apt install curl)
+  
+   curl <cluster-ip>:port example: curl 10.103.73.101:80
