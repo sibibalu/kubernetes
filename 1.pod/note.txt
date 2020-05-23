@@ -20,3 +20,9 @@ kubectl delete pods my-pod
 kubectl edit pods myapp-pod         #add a label
 kubectl describe pods myapp-pod     #check
 
+#dry-run
+kubectl run --image=note.txt myapp --dry-run -o yaml
+kubectl run --image=note.txt myapp --dry-run -o yaml > demo_pod.yml
+ls
+vim demo_pod.yml
+
