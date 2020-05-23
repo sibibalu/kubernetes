@@ -1,0 +1,27 @@
+kubectl get srvice
+kubectl get svc
+kubectl get pods
+kubectl create -f service.yml
+kubectl get svc
+kubectl describe svc myapp-service
+kubectl create -f pod.yml
+kubectl get pods
+kubectl describe pod myapp-pod
+kubectl describe svc myapp-service
+curl 192.168.1.190:30008               #master/node ip
+kubectl delete service myapp-service
+kubectl delete pods myapp-pod
+
+
+
+kubectl apply -f pod.yml
+kubectl get pods
+kubectl get svc
+kubectl expose pod myapp-pod --type=NodePort --target-port=80 --port=80 --selector=app=myapp --name=myapp-service
+kubectl get svc
+kubectl describe svc myapp-service
+curl 192.168.1.190:30300                  #master/node ip and find the nodeport
+kubectl delete svc myapp-service
+kubectl delete pod myapp-pod
+
+
