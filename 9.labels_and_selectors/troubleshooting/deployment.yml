@@ -13,11 +13,10 @@ spec:
      name: myapp-pod
      labels:
        app: myapp
-       type: front-end
     spec:
       containers:
-        - name: nginx-container
-          image: nginx
+        - name: nginx-php-hostname
+          image: ashkarstudy/nginx-php-hostname:v1
 
  replicas: 3
  selector:

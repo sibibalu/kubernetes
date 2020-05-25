@@ -1,0 +1,15 @@
+kubectl create -f deployment.yml
+kubectl get pods
+kubectl get all
+##kubectl expose deployment myapp-deployment --target-port=80 --port=80 --type=NordePort --dry-run -o yaml > service.yml
+vim service.yml
+kubectl create -f service.yml
+kubectl get all
+kubectl get svc
+kubectl describe svc myapp-deployment
+kubectl create -f service.yml
+##kubectl exec -it myapp-deployment-7c88576bf9-44mmh bash
+
+kubectl get all -l app=myapp
+kubectl get all -l app=myapp,type=front-end
+
