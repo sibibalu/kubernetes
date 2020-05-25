@@ -1,0 +1,13 @@
+kubectl get pods
+kubectl create -f pod.yml
+kubectl get pods -o wide
+kubectl describe pod myapp-pod
+kubectl delete pods myapp-pod
+
+vim pod.yml                   #change node01 to node02
+kubectl create -f pod.yml
+kubectl get pods -o wide
+kubectl delete pods myapp-pod
+kubectl delete pods myapp-pod --force
+kubectl get pods
+
