@@ -1,0 +1,13 @@
+kubectl label nodes node01  size=Large
+kubectl describe nodes node01
+
+kubectl create -f pod-node-selectors.yml
+kubectl get pods -o wide
+kubectl describe pods myapp-pod     #check pod node selectors
+
+kubectl describe nodes node01
+kubectl label nodes node01  size-
+kubectl describe nodes node01
+
+kubectl delete pods myapp-pod
+
