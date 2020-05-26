@@ -1,0 +1,25 @@
+#how many daemonsets are created in the cluster in all namespace ?
+kubectl get daemonsets --all-namespaces
+
+#which namespace are the daemonsets created in ?
+kubectl get daemonsets --all-namespaces
+
+#on how many nodes are the pods scheduled by the daemonset
+kubectl describe daemonsets.apps  kube-proxy  --namespace=kube-system
+
+#what is the image used by the POD deployed by the weave-net daemonset ?
+kubectl describe daemonsets.apps  kube-proxy  --namespace=kube-system
+
+#deploy a daemonset for FluentD logging
+#spec: Name: elasticsearch, Namespace: kube-system, Image: k8s.gcr.io/fluentd-elasticsearch:1.20
+kubectl create deployment elasticsearch --image=k8s.gcr.io/fluentd-elasticsearch:1.20 --dry-run -o yaml > elastic.yml
+vim elastic.yml #remove replicas, creationTimestamp, strategy, resources, status
+kubectl create -f elastic.yml
+kubectl get pods --namespace kube-system
+kubectl get pods -n kube-system
+
+#delete daemonset
+kubectl get pods -o wide --namespace kube-system
+kubectl delete daemonsets.apps -n kube-system elasticsearch
+kubectl get pods -o wide --namespace kube-system
+
