@@ -1,0 +1,38 @@
+#how many lables exist on node node01 ?
+kubectl describe nodes node01
+
+#what is the value set to the lable beta.kubernetes.io/arch on noe01 ?
+kubectl describe nodes node01
+
+#apply a lable color-blue to node node01
+kubectl label nodes node01 color=blue
+kubectl describe nodes node01
+
+#create a new deployment named 'blue' with the NGINX image and 6 replicas
+kubectl create deployment  blue --image=nginx  --dry-run -o yaml > deployment-blue.yml
+vim deployment-blue.yml   #change replicas
+kubectl create -f deployment-blue.yml
+kubectl get pods
+kubectl get deployments.apps
+
+#which nodes are the PODs placed on ?
+kubectl get pods -o wide
+
+#set node Affinity to the deployment to placed the PODs on node01 only
+#Name: blue, Replicas: 6, Image: nginx, NodeAffinity: requiredDuringSchedulingIgnoredDuringExecution, Key: color, value: blue
+cp deployment-blue.yml deployment-blue-node_affinity.yml
+vim deployment-blue-node_affinity.yml #got to kubernetes documentation
+kubectl delete deployments.apps blue
+kubectl create -f deployment-blue-node_affinity.yml
+kubectl get pods -o wide
+
+#remove lables
+kubectl label nodes node01 color-
+kubectl describe nodes node01
+
+#delete deployment
+kubectl get all
+kubectl delete deployments.apps blue
+kubectl get all
+
+
