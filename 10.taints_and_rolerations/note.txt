@@ -1,0 +1,85 @@
+#how many nodes exist on the system ? including the master node
+kubectl get nodes
+
+#do any taints exist on node01
+kubectl describe nodes node01
+
+#create a taint on node01 with key of 'sray', value of 'mortein' and effect of 'NoSchedule'
+kubectl taint node node01 spray=mortein:NoSchedule
+
+#create a new pod with the NGINX image, and Pod name as 'mosquito'
+kubectl create -f pod.yml
+kubectl get pods
+kubectl get pods -o wide
+
+#what is the state of the POD?
+kubectl get pods -o wide
+
+#set taints for node02
+kubectl delete pod mosquito
+kubectl taint node node02 name=dev:NoSchedule
+
+#create pod mosquito 
+kubectl create -f pod.yml
+kubectl get pods -o wide
+kubectl get pods
+
+#now why do you think the pod is in a pending state ?
+#POD mosquito cannot tolerate taint mortein or dev
+#create another pod name 'bee' with the NGINX image, which has a toleration set to the tainr mortein
+#image name: ngin, key:spray, value: mortein, effect: NoSchedule, status: running
+vim pod-bee.yml
+kubectl create -f pod-bee.yml
+kubectl get pods
+
+#do you see any taints on master node ?
+kubectl describe nodes master
+#copy master taints # node-role.kubernetes.io/master:NoSchedule
+
+#remove the taint on master, which currently has the taint effect on NoSchedule
+kubectl taint node master  node-role.kubernetes.io/master:NoSchedule-
+kubectl describe nodes master
+
+#check pod mosquito now ?
+kubectl get pods
+
+#whic node is the POD 'mosquito' on now ?
+kubectl get pods -o wide
+
+#reset master and nodes
+kubectl taint node node02 name=dev:NoSchedule-
+kubectl taint node master  node-role.kubernetes.io/master:NoSchedule
+kubectl taint node node01 spray=mortein:NoSchedule-
+
+kubectl describe nodes master | grep -i taints
+kubectl describe nodes node01 | grep -i taints
+kubectl describe nodes node02 | grep -i taints
+
+#delete pods
+kubectl delete pods mosquito
+kubectl delete pods bee
+
+#next demo
+kubectl taint node node01 spray=mortein:NoSchedule
+kubectl describe nodes node01 | grep  -i taints
+kubectl get pods
+cat pod-bee.yml
+kubectl create -f pod-bee.yml
+kubectl get pods -o wide
+kubectl taint node node01 spray=mortein:NoSchedule-
+kubectl describe nodes node01 | grep  -i taints
+kubectl delete pods bee
+
+kubectl taint node node02 spray=mortein:NoSchedule
+kubectl get pods -o wide
+kubectl create -f pod-bee.yml
+kubectl get pods -o wide
+
+#remove taints
+kubectl taint node node02 spray=mortein:NoSchedule-
+kubectl describe nodes node01 | grep  -i taints
+
+#delete pod
+kubectl delete pods bee
+
+
