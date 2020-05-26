@@ -1,0 +1,22 @@
+kubectl get pods
+kubectl create -f pod-limit.yml
+kubectl get pods
+kubectl describe pods pod-limit
+
+kubectl get pods pod-limit -o yaml >  pod-limit-new.yml
+vim pod-limit-new.yml  #change the memory
+
+kubectl delete pods pod-limit
+kubectl create -f pod-limit-new.yml
+
+kubectl get pods
+kubectl describe pods pod-limit
+
+
+#next demo mem and cpu
+vim pod-mem-cpu.yml
+kubectl create -f pod-mem-cpu.yml
+kubectl get pods
+kubectl describe pods pod-limit
+kubectl delete pods pod-limit
+
