@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myapp-deply
+    name: my-app
+  name: webapp-color
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: myapp-deply
+      name: my-app
+  template:
+    metadata:
+      labels:
+        app: myapp-deply
+        name: my-app
+    spec:
+      containers:
+      - image: kodekloud/webapp-color:v1
+        name: webapp-color

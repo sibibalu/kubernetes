@@ -1,0 +1,51 @@
+kubectl create -f deployment.yaml
+kubectl create -f service-deployment.yaml
+
+kubectl get pods
+
+#what is color of webapp 'check the url http://nodeip:30009'
+
+#inspect the deployment and identify the number of PODs deployed by it
+kubectl describe deployments.apps webapp-color
+#check desired
+
+#what container image is used to deploy the application?
+kubectl describe deployments.apps webapp-color
+
+#inspect the deployment and identify the current stategy
+kubectl describe deployments.apps webapp-color
+#look at 'StrategyType'
+
+#upgrade the application Image: kodekloud/webapp-color:v2
+#do not delete and re-create the deployment
+kubectl edit deployments.apps webapp-color
+kubectl get pods
+
+#next lab
+#change the deployment strategy to 'Recreate'
+#do not delete and re-create the deployment
+#remove rollingupdate lines
+kubectl edit deployments.apps webapp-color
+kubectl describe deployments.apps webapp-color
+
+#upgrade the application Image: kodekloud/webapp-color:v3
+#do not delete and re-create the deployment
+kubectl edit deployments.apps webapp-color
+kubectl get pods
+#will take time
+kubectl get pods -o wide
+kubectl get pods
+
+#rollout
+kubectl rollout undo deployment webapp-color
+kubectl get pods
+kubectl rollout undo deployment webapp-color
+kubectl get pods
+
+#check url
+
+#delete
+kubectl delete deployments.apps webapp-color
+kubectl delete service webapp-service
+
+
