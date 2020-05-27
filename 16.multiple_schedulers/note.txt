@@ -1,0 +1,27 @@
+#what is the name of the POD that deploys the default kubernetes schedule in this environment ?
+kubectl get pods --namespace kube-system
+
+#what is the image used to depply the kubernetes scheduler ?
+#inspect the kubernetes scheduler pod and identify the image
+kubectl describe pod -n kube-system kube-scheduler-master
+
+https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+
+#create a new scheduler
+#i changed the image
+
+vim  my-scheduler.yaml
+kubectl create -f my-scheduler.yaml
+kubectl get  deployments.apps -n kube-system my-scheduler
+kubectl get pods --all-namespaces
+
+kubectl create -f pod.yaml
+kubectl get pods
+kubectl get events
+
+#delete all
+kubectl delete clusterrolebindings.rbac.authorization.k8s.io -n kube-system my-scheduler-as-volume-scheduler
+kubectl delete clusterrolebindings.rbac.authorization.k8s.io -n kube-system my-scheduler-as-kube-scheduler
+kubectl delete serviceaccounts -n kube-system my-scheduler
+kubectl delete deployments.apps -n kube-system my-scheduler
+
