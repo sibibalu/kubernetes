@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name:  webapp-1
+spec:
+ containers:
+ - name: simple-webapp
+   image: kodekloud/event-simulator
+   ports:
+   - containerPort: 8080
+     protocol: TCP

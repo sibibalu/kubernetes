@@ -1,0 +1,18 @@
+kubectl create -f webapp-1.yaml
+kubectl create -f webapp-2.yaml
+kubectl get pods
+
+#a user - "USER5" - has expressed concerns accessing the application. identify the cause of the issue
+kubectl describe pods webapp-1
+kubectl logs webapp-1
+
+#webapp-2
+#A user is reporting issues while trying to purchase an item. identify the user and the cause of the issue
+kubectl get pods
+kubectl describe pods webapp-2
+#webapp-2 has two containers
+kubectl logs webapp-2 -c simple-webapp
+
+kubectl delete pods webapp-1
+kubectl delete pods webapp-2
+
