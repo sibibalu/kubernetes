@@ -1,0 +1,18 @@
+kubectl create -f lion.yaml
+kubectl create -f rabbit.yaml
+kubectl create -f elephant.yaml
+kubectl get pods
+
+kubectl top node
+kubectl top pods
+
+git clone https://github.com/kodekloudhub/kubernetes-metrics-server.git
+cd kubernetes-metrics-server/
+kubectl create -f .
+
+kubectl top node
+kubectl top pods
+
+kubectl delete pods elephant
+kubectl delete pods rabbit
+kubectl delete pods lion
