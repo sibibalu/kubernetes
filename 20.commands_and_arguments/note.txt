@@ -1,0 +1,30 @@
+kubectl create -f pod-ubuntu-sleeper.yaml
+kubectl get pods
+kubectl describe pod ubuntu-sleeper
+
+#what is the command used to run the pod 'ubuntu-sleeper' ?
+kubectl describe pod ubuntu-sleeper
+
+#create pod with ubuntu image to run container to sleep for seconds
+#Name: ubuntu-sleeper-2, command: sleep 5000
+vim pod-ubuntu-sleeper-2.yaml
+kubectl create -f pod-ubuntu-sleeper-2.yaml
+
+#inspect the Dockerfile given. what command is run at container startup ?
+vim Dockerfile
+
+#inspect the Dockerfile2 given. what command is run at container startup ?
+vim Dockerfile2
+
+#create a pod the given spec
+#Pod name: webapp-green
+#Pod name: webapp-green, Image: kodekcloud/webapp-color, Command line arg: --color=green
+#set the given command line arguments to chnage it to green
+vim pod-green.yaml
+kubectl create -f pod-green.yaml
+kubectl get pods
+
+kubectl delete pods ubuntu-sleeper
+kubectl delete pods ubuntu-sleeper-2
+kubectl delete pods webapp-green
+
