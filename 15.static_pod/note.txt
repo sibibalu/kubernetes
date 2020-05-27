@@ -1,0 +1,29 @@
+#how many static pods exist in this cluster in all namaspace ?
+kubectl get pods --all-namespaces
+#look for those with -master appended in the name
+
+#which is the path of the directory holding the static pod definition files ?
+ps -aux | grep kubelet
+#check --config=/var/lib/kubelet/config , staticpodpath
+vim /var/lib/kubelet/config.yaml
+/etc/kubernetes/manifests
+
+#what  is the docker image used to deploy the kube-api server as a static pod ?
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
+#create a static pod named static-busybox that uses the busybox image and the command sleep 1000
+#Name: static-busybox, Image: busybox
+kubectl run --restart=Never --image=busybox static-busybox --dry-run -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml
+vim /etc/kubernetes/manifests/static-busybox.yaml
+kubectl get pods --all-namespaces
+
+#edit the image on the static pod to use busybox:1.28.4
+#Name: static-busybox, Image: busybox:1.28.4
+kubectl get pods --all-namespaces
+vim /etc/kubernetes/manifests/static-busybox.yaml #change the image
+kubectl get pods 
+kubectl describe pods static-busybox-master
+
+#remove the busybox
+rm /etc/kubernetes/manifests/static-busybox.yaml
+
