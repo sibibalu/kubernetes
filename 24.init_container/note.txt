@@ -1,0 +1,6 @@
+kubectl create -f pod-with-init-container.yaml
+kubectl get pods
+kubectl describe pods blue
+
+kubectl delete pods blue
+
