@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: elastic-stack
+spec:
+  finalizers:
+    - kubernetes
+status:
+  phase: Active
