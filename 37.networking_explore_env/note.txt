@@ -1,0 +1,25 @@
+#q1 how many nodes are part of this cluster ? including the master and worker nodes
+kubectl get nodes
+
+#q2 what is the networ interface configured for cluster connectivity on the master node ? node-to-node ?
+ip link
+
+#q3 what is the ip address assigned to the master node on this interface ?
+kubectl get nodes -o wide
+
+#q4 what is the MAC address of the interface on the master node ?
+ip link show ens33
+
+#q5 what is the IP address assigned to node02 ?
+kubectl get nodes -o wide
+
+#q6 what is the state of the interface docker ?
+ip link show docker0
+
+#q7 if you were to ping google from the master node, which route dose it take ?
+#what is the ip address of the default gateway?
+ip route show default
+
+#q8 what is the port th kube-scheduler is listening on in the master node ?
+netstat -nplt
+
