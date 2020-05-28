@@ -1,0 +1,57 @@
+kubectl create -f pod-webapp-color.yaml
+kubectl create -f service.yaml
+kubectl get pods
+kubectl get svc
+kubectl describe svc webapp-color-service
+#check url http://nodeip:30080
+
+#what is the environment variable name set on the container in the pod ?
+kubectl describe pods webapp-color
+
+#update the env on the POD to display a green background
+#delete and create the POD. POD name: webapp-color, Label: webapp-color, env: APP_COLOR=green
+kubectl get pods webapp-color -o yaml > pod-green.yaml
+kubectl delete pods webapp-color
+vim pod-green.yaml
+kubectl create -f pod-green.yaml
+#check url http://nodeip:30080
+
+#how many configmaps exsist in the env ?
+kubectl get configmaps
+vim db-configmap.yaml
+kubectl create -f db-configmap.yaml
+kubectl get configmaps
+kubectl describe configmaps db-config
+
+#create a new configmap for webapp-color POD . use the spec
+#configmap name: webapp-config-map, DATA: APP_COLOR=darkblue
+vim webapp-config-map.yaml
+kubectl create -f webapp-config-map.yaml
+kubectl get configmaps
+#check url http://nodeip:30080
+
+#update the env variable on the POD use the newly created ConfigMap
+#delete and recreate the POD
+kubectl get pods webapp-color -o yaml > webapp-pod-configmap.yaml
+vim webapp-pod-configmap.yaml
+kubectl delete pods webapp-color
+kubectl create -f webapp-pod-configmap.yaml
+#check url http://nodeip:30080
+
+example:
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dapi-test-pod
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "env" ]
+      envFrom:
+      - configMapRef:
+          name: special-config
+  restartPolicy: Never
+
