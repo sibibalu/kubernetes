@@ -55,3 +55,6 @@ spec:
           name: special-config
   restartPolicy: Never
 
+#delete all pods and services like this
+kubectl delete svc webapp-color-service
+kubectl delete pods webapp-color

@@ -1,0 +1,32 @@
+#lab setup
+kubectl create -f pod-webapp.yaml
+kubectl create -f pod-mysql.yaml
+kubectl create -f service-for-db-sql01.yaml
+kubectl create -f service-for-webapp-pod.yaml
+#check the url 'http://nodeip:30080'
+
+#how many secrets exist on the system ?
+kubectl get secrets
+
+#how many secrets are defined in the 'default-tocken' secret ?
+kubectl get secrets
+
+#what is the type of the 'default-token' secret ?
+kubectl describe secrets default-token-nffqh
+
+#lab1-create secret check slide
+#q1 slide
+kubectl create secret generic db-secret --from-literal=DB_Host=sql01 --from-literal=DB_User=root --from-literal=DB_Password=password123
+
+#q2 slide
+kubectl delete pods webapp-pod                    #befor the delete take a yaml out  'pod-webapp-with-secret.yaml'
+kubectl create -f pod-webapp-with-secret.yaml
+kubectl get pods
+#check the url 'http://nodeip:30080'
+
+#lab cleanup 
+kubectl delete pods mysql
+kubectl delete pods webapp-pod
+kubectl delete svc sql01
+kubectl delete svc webapp-service
+kubectl delete secrets db-secret
