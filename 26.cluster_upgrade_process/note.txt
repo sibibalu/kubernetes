@@ -1,0 +1,59 @@
+#check your cluster version
+kubectl get nodes
+
+#how many nodes can host workloads in this cluster?
+kubectl get nodes
+
+#what is the latest stable version available for upgrade ?
+kubeadm upgrade plan
+
+
+Linux Solution
+
+# Execut these commands
+$ echo "source <(kubectl completion bash)" >> ~/.bashrc
+$ echo "source <(kubeadm completion bash)" >> ~/.bashrc
+
+# Reaload bash without logging out
+$ source ~/.bashrc 
+
+#we will be upgrading the master node first
+kubectl drain master --ignore-daemonsets
+kubectl get nodes
+kubeadm upgrade plan
+
+ apt-mark unhold kubeadm
+ apt-get install -y kubeadm=1.18.3-00
+ kubeadm upgrade apply v1.18.3
+ kubeadm version
+
+ apt-mark unhold kubelet
+ apt-get install -y kubelet=1.18.3-00
+ kubelet --version
+
+ kubectl uncordon master
+ kubectl get nodes
+
+#worker nodes upgrade
+#on master 
+kubectl drain node01 --ignore-daemonsets
+kubectl get nodes
+
+#on all nodes 
+apt-mark unhold kubelet
+apt-mark unhold kubeadm
+apt install kubeadm=1.18.3-00
+apt install kubelet=1.18.3-00
+kubeadm upgrade node             
+
+kubelet --version
+kubeadm version
+
+#on master
+kubectl get nodes
+kubectl uncordon node01
+kubectl uncordon node02
+kubectl get nodes
+
+
+
