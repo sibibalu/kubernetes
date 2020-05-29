@@ -1,0 +1,15 @@
+#q1 identify the certificate file used for the kube-api server
+kubectl describe pods -n kube-system kube-apiserver-master
+
+#q2 identify the certificate file used to authenticate kube-apiserver as a client to ETCD Server
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+#q3 identify the key used to authentication kubeapi-server to the kubelet server
+cat /etc/kubernetes/manifests/kube-apiserver.yaml
+
+#4 identify the ETCD server certificate used to host ETCD server
+cat /etc/kubernetes/manifests/etcd.yaml
+
+#5 what is the common name (CN) configured on the kube API Server Certificate ?
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text
+
