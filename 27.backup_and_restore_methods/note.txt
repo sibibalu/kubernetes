@@ -1,0 +1,65 @@
+#q1 what is the version of ETCD running on the cluster ? # check the ETCD pod or Process
+kubectl logs etcd-master -n kube-system
+#or
+kubectl describe pod -n kube-system etcd-master
+#check image version
+
+#q2 at what address do you reach the ETCD cluster from your master
+#check the ETCD service configuration in the ETCD POD
+kubectl describe pods -n kube-system etcd-master
+#look at --listen-client-urls=https://127.0.0.1:2379,https://192.168.1.190:2379
+
+#q3 where is the ETCD server certificate file located ?
+kubectl describe pods -n kube-system etcd-master
+#look at --cert-file=/etc/kubernetes/pki/etcd/server.crt
+
+#q4 where is the ETCD CA certificate file located ?
+kubectl describe pods -n kube-system etcd-master
+#look at  --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+
+#install etcd-client
+apt  install etcd-client
+ETCDCTL_API=3 etcdctl snapshot save -h
+
+#q5 take a snapshot of the ETCD database using the builin snapshot function
+ETCDCTL_API=3 etcdctl snapshot save -h
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /tmp/snapshot-pre-boot.db
+
+#q6 restore the snapshot
+ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --name=master --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --data-dir=/var/lib/etcd-from-backup --initial-cluster=master=https://127.0.0.1:2380 --initial-cluster-token=etcd-cluster-1 --initial-advertise-peer-urls=https://127.0.0.1:2380  snapshot restore /tmp/snapshot-pre-boot.db
+
+#and edit this file
+vim /etc/kubernetes/manifests/etcd.yaml
+
+ - --data-dir=/var/lib/etcd-from-backup     #edit this line
+ - --initial-cluster-token=etcd-cluster-1   #add token
+
+ volumeMounts:
+    - mountPath: /var/lib/etcd-from-backup
+
+- hostPath:
+      path: /var/lib/etcd-from-backup
+
+:wq
+
+docker ps -a | grep etcd
+docker ps -a | grep etcd
+kubectl get pods --all-namespaces
+
+#reconfigue all
+#and edit this file
+vim /etc/kubernetes/manifests/etcd.yaml
+
+ - --data-dir=/var/lib/etcd                 #edit this line
+ - --initial-cluster-token=etcd-cluster-1   #remove this line
+
+ volumeMounts:
+    - mountPath: /var/lib/etcd
+
+- hostPath:
+      path: /var/lib/etcd
+:wq
+
+docker ps -a | grep etcd
+docker ps -a | grep etcd
+kubectl get pods --all-namespaces
