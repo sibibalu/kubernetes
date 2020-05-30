@@ -1,0 +1,58 @@
+#q1 configure a volume to store logs at /var/log/webapp on the host
+#Name: webapp, Image Name: kodekloud/event-simulator, volume Hostpath: /var/log/webapp, volume Mount: /log
+vim webapp-pod-hostpath.yaml
+kubectl create -f webapp-pod-hostpath.yaml
+kubectl get pods
+kubectl describe pods webapp
+
+#q2 create a persistent volume with the given specification
+#Volume Name: pv-log, Storage: 100Mi, Access modes: ReasWritemany, Host path: /pv/log
+vim pv-log.yaml
+kubectl create -f pv-log.yaml
+kubectl get persistentvolume pv-log
+
+#q3 let us claim some of that storage for pur application. create a prersistenr volume claim with the given spec
+#Volume Name: claim-log-1, Storage request: 50Mi, Access modes: ReadWriteOnce
+vim claim-log-1.yaml
+kubectl create -f claim-log-1.yaml
+kubectl get persistentvolumeclaims
+
+#q4 what is the state of the PVC
+kubectl get pvc
+
+#q5 what is the state of the PV ?
+kubectl get pv
+
+#q6 whay is the claim not bound to the available prersistent volume ?
+#awr The Access modes set on the PV and the PVC do not match
+
+#q7 update the access mode on the claim to baibd it to the PVC
+#delete and recreate the claim-lo-1
+#Volume name: claim-log-1, Storage Request: 50Mi, PVol: pv-log, Status: Bound
+cp claim-log-1.yaml claim-log-1-new.yaml
+vim claim-log-1-new.yaml
+kubectl get pvc
+kubectl delete pvc claim-log-1
+kubectl create -f claim-log-1-new.yaml
+kubectl get pvc
+
+#q8 update the webapp pod to use the PVC as its store
+#replace hostpath configure earlier with the newly created PVC
+#Name: webapp, image Name: kodekloud/event-simulator, Volume PersistentVolumeClaim=claim-log-1, Volume: Mount: /log
+kubectl get pods
+kubectl delete pods webapp
+vim webapp-pod-pvc.yaml                      #it is a new file
+kubectl create -f webapp-pod-pvc.yaml
+kubectl get pods
+kubectl describe pods webapp
+
+#cleanup lab
+kubectl get pods
+kubectl delete pods webapp
+
+ kubectl get pvc
+ kubectl delete pvc claim-log-1
+
+kubectl get pv
+kubectl delete pv pv-log
+
