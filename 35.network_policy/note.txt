@@ -1,0 +1,49 @@
+#lab setup
+kubectl create -f 1.volume.yaml
+kubectl create -f 2.volume-claim.yaml
+kubectl create -f 3.mysql-server-cluster.yaml
+kubectl create -f 4.mysql-pod.yaml
+kubectl create -f 5.phpmyadmin-pod-service.yaml
+kubectl create -f 6.phpmyadmin-pod.yaml
+
+kubectl get pods
+kubectl describe pods phpmyadmin
+kubectl get service
+
+#check phpmyadmin working ?
+http://nodeip:port          #check the nodeport
+
+#then configure policy
+vim network-policy.yaml
+kubectl create -f network-policy.yaml
+
+#check phpmyadmin working ?
+http://nodeip:port          #check the nodeport
+
+#delete the network policy
+kubectl delete  networkpolicies.networking.k8s.io db-policy
+
+#change the port number for testing
+vim network-policy.yaml
+kubectl create -f network-policy.yaml
+
+#check phpmyadmin working ?
+http://nodeip:port          #check the nodeport
+
+#lan leanup
+kubectl get all
+kubectl delete pods phpmyadmin
+kubectl delete pods mysql
+
+kubectl get all
+kubectl delete service mysql-service
+kubectl delete service phpmyadmin
+
+kubectl delete  networkpolicies.networking.k8s.io db-policy
+
+kubectl get persistentvolume
+kubectl get persistentvolumeclaims
+
+kubectl delete persistentvolumeclaims mysql-pv-claim
+kubectl delete persistentvolume mysql-pv-volume         #or  kubectl delete persistentvolume mysql-pv-volume --force
+
