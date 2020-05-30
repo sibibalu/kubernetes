@@ -1,0 +1,9 @@
+#how many clusters are defined in the default kubeconfig file
+kubectl config view
+
+#how many users are defined in the default kubeconfig file
+kubectl config view
+
+#how many contexts are defined in the default kubeconfig file
+kubectl config view
+

@@ -1,0 +1,14 @@
+vim pod-pvt-secure.yaml
+kubectl create -f pod-pvt-secure.yaml
+
+kubectl get pods
+kubectl describe pods pod-secure
+
+kubectl create secret docker-registry regcred --docker-username=username --docker-password=password --docker-server=docker.io --docker-email=email@address
+
+kubectl get pods
+kubectl describe pods pod-secure
+
+kubectl delete secrets regcred
+kubectl delete pods pod-secure
+
