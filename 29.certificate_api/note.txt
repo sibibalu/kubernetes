@@ -1,0 +1,37 @@
+#q1 create a user and generate cert req
+adduser akshay
+su - akshay
+openssl genrsa -out akshay.key 2048
+ls
+openssl req -new -key akshay.key -subj "/CN=akshay" -out akshay.csr
+ls
+cat akshay.csr
+exit
+
+
+cp /home/akshay/akshay.* .
+ls
+
+#q2 create a certificate request object with the name akshay with the content of the akshay.csr file
+cat akshay.csr
+cat akshay.csr | base64
+cat akshay.csr | base64 > csr-base64
+vim akshay-req.yaml
+kubectl create -f akshay-req.yaml
+kubectl get csr
+
+#what is the condition of newly created certificate siging
+kubectl get csr
+
+#q3 approve the CSR request
+kubectl certificate approve akshay
+kubectl get csr
+
+
+#tips
+kubectl get csr akshay -o jsonpath='{.status.certificate}' | base64 --decode > akshay-new.csr
+cat akshay-new.csr
+openssl x509 -in ./akshay-new.csr --noout -text
+
+https://medium.com/better-programming/k8s-tips-give-access-to-your-clusterwith-a-client-certificate-dfb3b71a76fe
+
