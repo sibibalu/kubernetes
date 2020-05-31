@@ -1,0 +1,12 @@
+#what is the path configured with all binaries of CNI supported plugins ?
+ps -aux | grep kubelet
+#look for --cni-bin-dir
+ls /opt/cni/bin/
+
+#what is the CNI plugin configued to be used on this kubernetes cluster ?
+ls /opt/cni/bin/
+
+#what binary executable file will be run by kubelet after a container and ots associated namespace are created
+ls /etc/cni/net.d/10-weave.conflist
+vim /etc/cni/net.d/10-weave.conflist            #  weave-net
+
