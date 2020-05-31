@@ -1,0 +1,18 @@
+#identify the dns solution implemented in this cluster
+kubectl get pods -n kube-system
+
+#how many pods of the dns server are deployed ?
+kubectl get deploy -n kube-system
+
+#what is the name of the service created for accessing coredns ?
+kubectl get service -n kube-system
+
+#where is the configuration file located for configuring the coredns service ?
+kubectl -n kube-system describe deployments.apps coredns | grep -A2 Args | grep Corefile
+
+#what is the name of the configmap object created for corefile ?
+kubectl get configmaps -n kube-system
+
+#what is the root domain/zone configured for this kubernetes cluster ?
+kubectl describe configmaps -n kube-system coredns
+
