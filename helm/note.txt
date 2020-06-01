@@ -1,0 +1,61 @@
+#install and configure helm
+wget https://get.helm.sh/helm-v3.2.1-linux-amd64.tar.gz
+ls
+tar -zxvf helm-v3.2.1-linux-amd64.tar.gz
+ls
+ls linux-amd64/
+mv linux-amd64/helm /usr/local/bin/helm
+helm version
+helm -h
+
+#helm completion bash
+helm completion bash
+source <(helm completion bash)
+helm list
+
+
+#initialize helm
+helm version
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm search repo stable
+
+helm search repo nginx
+
+helm install repo stable/wordpress
+ls
+kubectl get pods
+kubectl get all
+helm list
+helm uninstall repo
+helm list
+kubectl get all
+
+helm create examplechart
+cd examplechart/
+ls
+vim values.yaml
+cd ..
+
+helm search repo apache
+helm pull stable/jenkins
+ls
+helm install jenkins-1.25.0.tgz --generate-name
+kubectl get pods
+helm list
+helm uninstall jenkins-1-1591000280
+kubectl get all
+
+cd wordpress/
+ls
+cat values.yaml
+cat Chart.yaml
+cat README.md
+helm dependency list
+
+cat requirements.yaml
+ls charts/mariadb/
+cat values.yaml
+ls templates/
+cat templates/deployment.yaml
+
+
