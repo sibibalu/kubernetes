@@ -4,12 +4,12 @@ kubectl get pods --all-namespaces
 kubectl get namespaces
 kubectl get pods --namespace=kube-system
 ls
+
 kubectl get ns
 kubectl create -f 1.namespace.yml
 kubectl get ns
 kubectl describe ns dev
 kubectl create -f 3.resourcequota.yml
-kubectl get resourcequotas
 kubectl get resourcequotas
 kubectl get resourcequotas -n dev
 kubectl get namespaces
@@ -31,7 +31,7 @@ kubectl get pods
 kubectl get pods -n dev
 kubectl describe pods -n dev myapp-pod
 kubectl delete pods -n dev  myapp-pod
-kubectl delete resourcequotas -n dev
+kubectl delete resourcequotas -n dev compute-quota
 kubectl delete namespaces dev
 kubectl get all
 
