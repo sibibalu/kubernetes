@@ -2,24 +2,30 @@ vim replicaset-definition.yml
 kubectl get pods
 kubectl create -f replicaset-definition.yml
 kubectl get pods
+
 kubectl get replicasets.apps
 kubectl get replicasets
 kubectl get rs
 kubectl get rs -o wide
-kubectl describe rs myapp-rc
+kubectl describe rs myapp-rs
+
 vim replicaset-definition.yml    #change replica 3 to 6
 kubectl get pods
 kubectl replace -f replicaset-definition.yml
 kubectl get pods
+
 kubectl scale --replicas=8 -f replicaset-definition.yml
 vim replicaset-definition.yml   #for check
 kubectl get pods
-kubectl scale --replicas=10 replicaset myapp-rc
+
+kubectl scale --replicas=10 replicaset myapp-rs
 kubectl get pods
-kubectl get rs myapp-rc
-kubectl get rs myapp-rc -o yaml
-kubectl get rs myapp-rc -o yaml > replicaset.yml
+
+kubectl get rs myapp-rs
+kubectl get rs myapp-rs -o yaml
+kubectl get rs myapp-rs -o yaml > replicaset.yml
 vim replicaset.yml
-kubectl delete rs myapp-rc
+
+kubectl delete rs myapp-rs
 kubectl get rs
 
